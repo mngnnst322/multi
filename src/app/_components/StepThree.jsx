@@ -1,5 +1,5 @@
 import React from "react";
 
-export const StepTwo = () => {
+export const StepThree = () => {
   return <div></div>;
 };
