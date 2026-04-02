@@ -6,7 +6,7 @@ export const Textfield = (props) => {
     placeholder,
     value,
     error,
-    Onchange,
+    onChange,
     type = "text",
     required = false,
   } = props;
@@ -20,7 +20,7 @@ export const Textfield = (props) => {
         className={`w-full h-11 rounded-lg border border-[#CBD5E1] p-3 ${error ? "border-[#14924]" : "border-[#CBD5E1]"}`}
         value={value}
         placeholder={placeholder}
-        Onchange={Onchange}
+        onChange={onChange}
         type={type}
       />
       {error && <p className="text-sm text-[#E14942]">{error}</p>}

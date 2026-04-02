@@ -1,7 +1,7 @@
 import React from "react";
 import { Textfield } from "./Textfield";
 
-export const StepOne = (onclick) => {
+export const StepOne = ({ onClick }) => {
   return (
     <div className="space-y-34">
       <div>
@@ -24,7 +24,7 @@ export const StepOne = (onclick) => {
       </div>
       <div>
         <button
-          onClick={onclick}
+          onClick={onClick}
           className=" bg-black w-full h-12 flex justify-center items-center text-white rounded-2xl"
         >
           Contine 1/3{" "}
