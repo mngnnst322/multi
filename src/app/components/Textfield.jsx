@@ -11,7 +11,7 @@ export const Textfield = (props) => {
     required = false,
   } = props;
   return (
-    <div className="space-y-2">
+    <div className="space-y-4">
       <label className="font-semibold text-sm">
         {label}
         {required && <span className="text-[#E14942]">*</span>}
