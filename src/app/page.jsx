@@ -9,7 +9,7 @@ import { Button } from "./components/Button";
 import { StepThree } from "./components/StepThree";
 
 export default function Home() {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
 
   const nextStep = () => {
     if (currentStep < 4) {
@@ -19,32 +19,65 @@ export default function Home() {
   const prevStep = () => {
     setCurrentStep((prev) => prev - 1);
   };
-  const CurrentStepComponent = [StepOne, StepTwo, StepThree][currentStep];
+  const [form, setForm] = useState({
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+    birthday: "",
+    image: "",
+  });
+  const [errors, setErrors] = useState({
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+    birthday: "",
+    image: "",
+  });
+
   return (
     <div className="w-full h-screen  flex  justify-center items-center bg-[#f4f4f4]">
-      <div className="w-120 h-min-163.75 bg-white rounded-lg p-8 shadow-2xl">
-        <Header />
-        <div className="flex flex-col justify-between">
-          <div className="w-full">
-            <CurrentStepComponent />
-          </div>
-          <div className="w-full">
-            <Button
-              stepCount={currentStep}
-              handleNext={() => {
-                nextStep();
-                if (
-                  isFirstNameValid() ||
-                  isLastNameValid() ||
-                  isFullNameValid()
-                )
-                  return;
-                {
-                }
-              }}
-            />
-          </div>
-        </div>
+      <div className="w-120 h(-min-163.75 bg-white rounded-lg p-8 shadow-2xl">
+        {currentStep === 1 && (
+          <>
+            <StepOne
+              form={form}
+              setForm={setForm}
+              errors={errors}
+              setErrors={setErrors}
+              nextStep={nextStep}
+              prevStep={prevStep}
+              currentStep={currentStep}
+            />{" "}
+          </>
+        )}
+        {currentStep === 2 && (
+          <>
+            <StepTwo
+              form={form}
+              setForm={setForm}
+              errors={errors}
+              setErrors={setErrors}
+              nextStep={nextStep}
+              prevStep={prevStep}
+              currentStep={currentStep}
+            />{" "}
+          </>
+        )}
+        {currentStep === 3 && (
+          <>
+            <StepThree
+              form={form}
+              setForm={setForm}
+              errors={errors}
+              setErrors={setErrors}
+              nextStep={nextStep}
+              prevStep={prevStep}
+              currentStep={currentStep}
+            />{" "}
+          </>
+        )}
       </div>
     </div>
   );

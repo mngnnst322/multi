@@ -5,7 +5,7 @@ import { Textfield } from "./Textfield";
 import { Header } from "./Header";
 import { Button } from "./Button";
 
-export const StepOne = () => {
+export const StepOne = ({ currentStep, nextStep }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [fullName, setFullName] = useState("");
@@ -26,8 +26,15 @@ export const StepOne = () => {
 
     if (!/^[a-zA-Z ]{2,30}$/.test(lastName)) return "full name cannot be empty";
   };
+
+  const isHavingError = () => {
+    return (
+      isFirstNameValid(form.firstname) || isLastNameValid() || isFullNameValid()
+    );
+  };
   return (
-    <div className="">
+    <div className="space-y-5">
+      <Header />
       <div>
         <Textfield
           value={firstName}
@@ -59,6 +66,11 @@ export const StepOne = () => {
           error={submitted ? isFullNameValid() : ""}
           type="text"
         />
+      </div>
+      <div className="flex flex-col justify-between">
+        <div className="w-full">
+          <Button stepCount={currentStep} nextStep={nextStep} />
+        </div>
       </div>
     </div>
   );

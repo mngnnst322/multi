@@ -4,12 +4,14 @@ import React, { useState } from "react";
 import { Textfield } from "./Textfield";
 import { Header } from "./Header";
 import { Button } from "./Button";
+import { Back } from "./Back";
 
-export const StepTwo = () => {
-  const [Email, setEmailtName] = useState("");
+export const StepTwo = ({ prevStep, nextStep, form, setForm }) => {
+  const [submitted, setSubmitted] = useState("");
+  const [Email, setEmailName] = useState("");
   const [Phonenumber, setPhonenumber] = useState("");
   const [Password, setPassword] = useState("");
-  const [Confirmpassword, setConfirmpassword] = useState(false);
+  const [Confirmpassword, setConfirmpassword] = useState("");
   const isEmailValid = () => {
     if (Email === "") return "Email cannot be empty";
 
@@ -32,13 +34,23 @@ export const StepTwo = () => {
     if (!/^[a-zA-Z ]{2,30}$/.test(Confirmpassword))
       return "Confirmpasswordcannot be empty";
   };
+  const isHavingError = () => {
+    return (
+      isEmailValid(form.firstname) ||
+      isPhonenumberValid() ||
+      isPasswordValid() ||
+      isConfirmpasswordvalid
+    );
+  };
+
   return (
-    <div className="">
+    <div className="space-y-8">
       <div>
+        <Header />
         <Textfield
           value={Email}
           onChange={(e) => {
-            setFirstName(e.target.value);
+            setEmailName(e.target.value);
           }}
           label="Email"
           placeholder="Placeholder"
@@ -48,9 +60,9 @@ export const StepTwo = () => {
         <Textfield
           value={Phonenumber}
           onChange={(e) => {
-            setLastName(e.target.value);
+            setPhonenumber(e.target.value);
           }}
-          label="Phonenumber"
+          label="Phone number"
           placeholder="Placeholder"
           error={submitted ? isPhonenumberValid() : ""}
           type="text"
@@ -58,7 +70,7 @@ export const StepTwo = () => {
         <Textfield
           value={Password}
           onChange={(e) => {
-            setFullName(e.target.value);
+            setPassword(e.target.value);
           }}
           label="Password"
           placeholder="Placeholder"
@@ -68,13 +80,17 @@ export const StepTwo = () => {
         <Textfield
           value={Confirmpassword}
           onChange={(e) => {
-            setFullName(e.target.value);
+            setConfirmpassword(e.target.value);
           }}
-          label="Confirmpassword"
+          label="Confirm password"
           placeholder="Placeholder"
-          error={submitted ? isConfirmpasswordValid() : ""}
+          error={submitted ? isConfirmpasswordvalid() : ""}
           type="text"
         />
+      </div>
+      <div className="flex w-97.5  justify-center items-center gap-4">
+        <Back onClick={prevStep} disabled={isHavingError()} />
+        <Button nextStep={nextStep} />
       </div>
     </div>
   );
