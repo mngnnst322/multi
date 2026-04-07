@@ -5,31 +5,38 @@ import { Textfield } from "./Textfield";
 import { Header } from "./Header";
 import { Button } from "./Button";
 
-export const StepOne = ({ currentStep, nextStep }) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const isFirstNameValid = () => {
-    if (firstName === "") return "first name cannot be empty";
+export const StepOne = ({
+  currentStep,
+  nextStep,
+  form,
+  setForm,
+  errors,
+  setErrors,
+}) => {
+  const isFirstNameValid = (value) => {
+    if (value === "") return "First name cannot be empty";
 
-    if (!/^[a-zA-Z ]{2,30}$/.test(firstName))
-      return "first name cannot be empty";
+    if (!/^[a-zA-Z]+$/.test(value))
+      return "First name cannot contain special characters or numbers.";
   };
-  const isLastNameValid = () => {
-    if (lastName === "") return "last name cannot be empty";
+  const isLastNameValid = (value) => {
+    if (value === "") return "Last name cannot be empty";
 
-    if (!/^[a-zA-Z ]{2,30}$/.test(lastName)) return "last name cannot be empty";
+    if (!/^[a-zA-Z ]+$/.test(value))
+      return "Last name cannot contain special characters or numbers.";
   };
-  const isFullNameValid = () => {
-    if (fullName === "") return "full name cannot be empty";
+  const isUserNameValid = (value) => {
+    if (value === "") return "Username cannot be empty";
 
-    if (!/^[a-zA-Z ]{2,30}$/.test(lastName)) return "full name cannot be empty";
+    if (value === "banana")
+      return "This username is already taken. Please choose another one.";
   };
 
   const isHavingError = () => {
     return (
-      isFirstNameValid(form.firstname) || isLastNameValid() || isFullNameValid()
+      isFirstNameValid(form.firstname) ||
+      isLastNameValid(form.lastname) ||
+      isUserNameValid(form.username)
     );
   };
   return (
@@ -37,39 +44,56 @@ export const StepOne = ({ currentStep, nextStep }) => {
       <Header />
       <div>
         <Textfield
-          value={firstName}
+          value={form.firstname}
           onChange={(e) => {
-            setFirstName(e.target.value);
+            setErrors({
+              ...errors,
+              firstname: isFirstNameValid(e.target.value),
+            });
+            setForm({ ...form, firstname: e.target.value });
           }}
+          error={errors.firstname}
+          required={true}
           label="First name"
-          placeholder="Placeholder"
-          error={submitted ? isFirstNameValid() : ""}
-          type="text"
+          placeholder="John..."
         />
         <Textfield
-          value={lastName}
+          value={form.lastname}
           onChange={(e) => {
-            setLastName(e.target.value);
+            setErrors({
+              ...errors,
+              Lastname: isLastNameValid(e.target.value),
+            });
+            setForm({ ...form, lastname: e.target.value });
           }}
-          label="last name"
-          placeholder="Placeholder"
-          error={submitted ? isLastNameValid() : ""}
-          type="text"
+          error={errors.Lastname}
+          required={true}
+          label="Last name"
+          placeholder="Doe..."
         />
         <Textfield
-          value={fullName}
+          value={form.username}
           onChange={(e) => {
-            setFullName(e.target.value);
+            setErrors({
+              ...errors,
+              Username: isUserNameValid(e.target.value),
+            });
+
+            setForm({ ...form, username: e.target.value });
           }}
-          label="Full name"
-          placeholder="Placeholder"
-          error={submitted ? isFullNameValid() : ""}
-          type="text"
+          error={errors.Username}
+          required={true}
+          label="Username"
+          placeholder="boldoo247..."
         />
       </div>
       <div className="flex flex-col justify-between">
         <div className="w-full">
-          <Button stepCount={currentStep} nextStep={nextStep} />
+          <Button
+            stepCount={currentStep}
+            nextStep={nextStep}
+            disabled={isHavingError()}
+          />
         </div>
       </div>
     </div>

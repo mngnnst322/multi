@@ -4,29 +4,23 @@ import { StepOne } from "./components/StepOne";
 import { StepTwo } from "./components/StepTwo";
 import { Textfield } from "./components/Textfield";
 import { Header } from "./components/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./components/Button";
 import { StepThree } from "./components/StepThree";
-
+import { StepFour } from "./components/StepFour";
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(1);
 
   const nextStep = () => {
-    if (currentStep < 4) {
-      setCurrentStep((prev) => prev + 1);
-    }
+    setCurrentStep((prev) => prev + 1);
   };
   const prevStep = () => {
     setCurrentStep((prev) => prev - 1);
   };
-  const [form, setForm] = useState({
-    firstname: "",
-    lastname: "",
-    username: "",
-    email: "",
-    birthday: "",
-    image: "",
-  });
+  const [step, setStep] = useState(0);
+
+  const [form, setForm] = useState(null);
+
   const [errors, setErrors] = useState({
     firstname: "",
     lastname: "",
@@ -34,7 +28,35 @@ export default function Home() {
     email: "",
     birthday: "",
     image: "",
+    phonenumber: "",
+    password: "",
+    confirmpassword: "",
   });
+  useEffect(() => {
+    if (form !== null) {
+      localStorage.setItem("form", JSON.stringify(form));
+    } else {
+      const storedForm = JSON.parse(localStorage.getItem("form"));
+      if (storedForm) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setForm(storedForm);
+      } else {
+        setForm({
+          firstname: "",
+          lastname: "",
+          username: "",
+          email: "",
+          birthday: "",
+          image: "",
+          phonenumber: "",
+          password: "",
+          confirmpassword: "",
+        });
+      }
+    }
+  }, [form]);
+
+  if (!form) return null;
 
   return (
     <div className="w-full h-screen  flex  justify-center items-center bg-[#f4f4f4]">
@@ -78,6 +100,7 @@ export default function Home() {
             />{" "}
           </>
         )}
+        {currentStep === 4 && <StepFour />}
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ export const Textfield = (props) => {
         {required && <span className="text-[#E14942]">*</span>}
       </label>
       <input
-        className={`w-full h-11 rounded-lg border border-[#CBD5E1] p-3 ${error ? "border-[#14924]" : "border-[#CBD5E1]"}`}
+        className={`w-full h-11 rounded-lg border border-[#CBD5E1] p-3 ${error ? "border-[#E14924]" : "border-[#CBD5E1]"}`}
         value={value}
         placeholder={placeholder}
         onChange={onChange}
