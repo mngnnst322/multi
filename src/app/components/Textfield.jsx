@@ -9,12 +9,15 @@ export const Textfield = (props) => {
     onChange,
     type = "text",
     required = false,
+    requiredPin,
   } = props;
   return (
     <div className="space-y-4">
       <label className="font-semibold text-sm">
         {label}
-        {required && <span className="text-[#E14942]">*</span>}
+        {required && (!requiredPin || error) && (
+          <span className="text-[#E14942]">*</span>
+        )}
       </label>
       <input
         className={`w-full h-11 rounded-lg border border-[#CBD5E1] p-3 ${error ? "border-[#E14924]" : "border-[#CBD5E1]"}`}

@@ -14,6 +14,8 @@ export const StepTwo = ({
   currentStep,
   errors,
   setErrors,
+  setrequiredPin,
+  requiredPin,
 }) => {
   const isEmailValid = (value) => {
     if (value === "") return "Email cannot be empty";
@@ -59,6 +61,7 @@ export const StepTwo = ({
         <Textfield
           value={form.email}
           onChange={(e) => {
+            setrequiredPin({ ...requiredPin, email: true });
             setErrors({
               ...errors,
               email: isEmailValid(e.target.value),
@@ -69,10 +72,12 @@ export const StepTwo = ({
           required={true}
           label="Email"
           placeholder="..."
+          requiredPin={requiredPin.email}
         />
         <Textfield
           value={form.phonenumber}
           onChange={(e) => {
+            setrequiredPin({ ...requiredPin, phonenumber: true });
             setErrors({
               ...errors,
               phonenumber: isPhonenumberValid(e.target.value),
@@ -83,10 +88,12 @@ export const StepTwo = ({
           required={true}
           label="Phone number"
           placeholder="..."
+          requiredPin={requiredPin.phonenumber}
         />
         <Textfield
           value={form.password}
           onChange={(e) => {
+            setrequiredPin({ ...requiredPin, password: true });
             setErrors({
               ...errors,
               password: isPasswordValid(e.target.value),
@@ -98,10 +105,12 @@ export const StepTwo = ({
           type="password"
           label="Password"
           placeholder="..."
+          requiredPin={requiredPin.password}
         />
         <Textfield
           value={form.confirmpassword}
           onChange={(e) => {
+            setrequiredPin({ ...requiredPin, confirmpassword: true });
             setErrors({
               ...errors,
               confirmpassword: isConfirmpasswordvalid(e.target.value),
@@ -113,6 +122,7 @@ export const StepTwo = ({
           type="password"
           label="Confirm Password"
           placeholder="..."
+          requiredPin={requiredPin.confirmpassword}
         />
       </div>
       <div className="flex w-97.5  justify-center items-center gap-4">

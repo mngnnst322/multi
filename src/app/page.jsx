@@ -10,6 +10,7 @@ import { StepThree } from "./components/StepThree";
 import { StepFour } from "./components/StepFour";
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(1);
+  const [step, setStep] = useState(0);
 
   const nextStep = () => {
     setCurrentStep((prev) => prev + 1);
@@ -17,7 +18,17 @@ export default function Home() {
   const prevStep = () => {
     setCurrentStep((prev) => prev - 1);
   };
-  const [step, setStep] = useState(0);
+  const [requiredPin, setrequiredPin] = useState({
+    firstname: false,
+    lastname: false,
+    username: false,
+    email: false,
+    birthday: false,
+    image: false,
+    phonenumber: false,
+    password: false,
+    confirmpassword: false,
+  });
 
   const [form, setForm] = useState(null);
 
@@ -32,6 +43,7 @@ export default function Home() {
     password: "",
     confirmpassword: "",
   });
+
   useEffect(() => {
     if (form !== null) {
       localStorage.setItem("form", JSON.stringify(form));
@@ -55,8 +67,32 @@ export default function Home() {
       }
     }
   }, [form]);
+  // useEffect(() => {
+  //   if (required !== null) {
+  //     localStorage.setItem("required", JSON.stringify(required));
+  //   } else {
+  //     const storedRequired = JSON.parse(localStorage.getItem("required"));
+  //     if (storedRequired) {
+  //       // eslint-disable-next-line react-hooks/set-state-in-effect
+  //       setrequired(storedRequired);
+  //     } else {
+  //       setrequired({
+  //         firstname: "",
+  //         lastname: "",
+  //         username: "",
+  //         email: "",
+  //         birthday: "",
+  //         image: "",
+  //         phonenumber: "",
+  //         password: "",
+  //         confirmpassword: "",
+  //       });
+  //     }
+  //   }
+  // }, [required]);
 
   if (!form) return null;
+  // if (!required) return null;
 
   return (
     <div className="w-full h-screen  flex  justify-center items-center bg-[#f4f4f4]">
@@ -71,6 +107,8 @@ export default function Home() {
               nextStep={nextStep}
               prevStep={prevStep}
               currentStep={currentStep}
+              requiredPin={requiredPin}
+              setrequiredPin={setrequiredPin}
             />{" "}
           </>
         )}
@@ -84,6 +122,8 @@ export default function Home() {
               nextStep={nextStep}
               prevStep={prevStep}
               currentStep={currentStep}
+              requiredPin={requiredPin}
+              setrequiredPin={setrequiredPin}
             />{" "}
           </>
         )}
@@ -97,6 +137,8 @@ export default function Home() {
               nextStep={nextStep}
               prevStep={prevStep}
               currentStep={currentStep}
+              requiredPin={requiredPin}
+              setrequiredPin={setrequiredPin}
             />{" "}
           </>
         )}

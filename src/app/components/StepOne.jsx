@@ -12,6 +12,8 @@ export const StepOne = ({
   setForm,
   errors,
   setErrors,
+  requiredPin,
+  setrequiredPin,
 }) => {
   const isFirstNameValid = (value) => {
     if (value === "") return "First name cannot be empty";
@@ -46,6 +48,7 @@ export const StepOne = ({
         <Textfield
           value={form.firstname}
           onChange={(e) => {
+            setrequiredPin({ ...requiredPin, firstname: true });
             setErrors({
               ...errors,
               firstname: isFirstNameValid(e.target.value),
@@ -56,10 +59,12 @@ export const StepOne = ({
           required={true}
           label="First name"
           placeholder="John..."
+          requiredPin={requiredPin.firstname}
         />
         <Textfield
           value={form.lastname}
           onChange={(e) => {
+            setrequiredPin({ ...requiredPin, lastname: true });
             setErrors({
               ...errors,
               Lastname: isLastNameValid(e.target.value),
@@ -70,10 +75,12 @@ export const StepOne = ({
           required={true}
           label="Last name"
           placeholder="Doe..."
+          requiredPin={requiredPin.lastname}
         />
         <Textfield
           value={form.username}
           onChange={(e) => {
+            setrequiredPin({ ...requiredPin, username: true });
             setErrors({
               ...errors,
               Username: isUserNameValid(e.target.value),
@@ -85,6 +92,7 @@ export const StepOne = ({
           required={true}
           label="Username"
           placeholder="boldoo247..."
+          requiredPin={requiredPin.username}
         />
       </div>
       <div className="flex flex-col justify-between">
